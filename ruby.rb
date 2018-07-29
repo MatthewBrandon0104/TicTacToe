@@ -9,9 +9,14 @@ class User
 end
 
 def draw_board
-    board = [["-","-","-"],["-","-","-"],["-","-","-"]]
-    board.each do |x|
-        p x
+    board = {
+        "rowA": [0,0,0],
+        "rowB": [0,0,0],
+        "rowC": [0,0,0]
+        }
+    
+    board.each do |x,y|
+        p "#{x} : #{y}"
     end
 end
 
