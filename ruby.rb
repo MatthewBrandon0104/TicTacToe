@@ -47,6 +47,10 @@ class Game < User
         end
     end
     
+    def check_win
+        if @board[:"row A"].all? {|space| space == "x" || space == "o" }
+    end
+    
     def play_round
         draw_board
         p player_1.icon
