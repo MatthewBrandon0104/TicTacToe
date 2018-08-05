@@ -36,7 +36,7 @@ class Game < User
         @player_2 = User.new
         @board = {
         "row A": ["-","-","-"],
-        "row B": ["-","-","-"],
+        "row B": ["X","X","X"],
         "row C": ["-","-","-"]
         }
     end
@@ -48,15 +48,34 @@ class Game < User
     end
     
     def check_win
-        if @board[:"row A"].all? {|space| space == "x" || space == "o" }
+        @board.each do |key,value|
+            if value.all? {|item| item == "X" || item == "O"}
+                p "There's a winner!"
+                p "#{key} across and the Player #{value[0]}"
+                return
+            end
+        end
+        p "There's No Winner Yet..."    
     end
     
     def play_round
         draw_board
-        p player_1.icon
-        p player_2.icon
+        check_win
     end
 end
 
 game_1 = Game.new
 game_1.play_round
+    
+=begin
+#How to change and iterate through each has key/array
+board.each do |k,v|
+        if k == :"row A"
+        i = 0
+        v.each do |item|
+            board[k][i] = "Z"
+            i += 1
+        end
+    end
+end
+=end
