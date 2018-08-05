@@ -49,9 +49,14 @@ class Game < User
     
     def check_win
         @board.each do |key,value|
-            if value.all? {|item| item == "X" || item == "O"}
+            if value.all? {|item| item == "X"}
                 p "There's a winner!"
-                p "#{key} across and the Player #{value[0]}"
+                p "#{key} across and the Player X"
+                return
+            
+            elsif value.all? {|item| item == "O"}
+                p "There's a winner!"
+                p "#{key} across and the Player O"
                 return
             end
         end
