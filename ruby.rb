@@ -36,8 +36,8 @@ class Game < User
         @player_2 = User.new
         @board = {
         "row A": ["-","-","-"],
-        "row B": ["X","X","X"],
-        "row C": ["-","-","-"]
+        "row B": ["X","O","O"],
+        "row C": ["X","-","O"]
         }
     end
 
@@ -48,7 +48,7 @@ class Game < User
     end
     
     def check_win
-        @board.each do |key,value|
+        @board.each do |key,value| #checks horizontal wins
             if value.all? {|item| item == "X"}
                 p "There's a winner!"
                 p "#{key} across and the Player X"
@@ -60,7 +60,29 @@ class Game < User
                 return
             end
         end
-        p "There's No Winner Yet..."    
+        
+
+        i = 0    #checks vertical wins
+        while i < 3    
+            if @board[:"row A"][i] == @board[:"row B"][i] && @board[:"row A"][i] == @board[:"row C"][i]
+                p "We have a vertical winner...player #{@board[:"row A"][i]}!"
+                return
+            else
+                i += 1
+            end
+        end
+        
+        if @board[:"row B"][1] != "-" #checks diagonal wins
+            if @board[:"row A"][0] == @board[:"row B"][1] && @board[:"row C"][2] == @board[:"row B"][1]
+                p "We have a diagonal winner...player #{@board[:"row B"][1]}!"
+                return
+            elsif @board[:"row A"][2] == @board[:"row B"][1] && @board[:"row C"][0] == @board[:"row B"][1]
+                p "We have a diagonal winner...player #{@board[:"row B"][1]}!"
+                return
+            end
+        end
+        
+        p "There's no winner this round..."
     end
     
     def play_round
