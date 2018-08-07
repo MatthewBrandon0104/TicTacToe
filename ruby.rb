@@ -1,10 +1,13 @@
 class User
     attr_reader :icon
+    attr_accessor :wins, :losses
     @@counter = 0
     
     def initialize
         @icon = "X" if @@counter == 0
         @icon = "O" if @@counter > 0
+        @wins = 0
+        @losses = 0
         @@counter += 1
     end
     
@@ -35,9 +38,9 @@ class Game < User
         @player_1 = User.new
         @player_2 = User.new
         @board = {
-        "row A": ["-","-","-"],
-        "row B": ["-","-","-"],
-        "row C": ["-","-","-"]
+        "row A": ["X","-","-"],
+        "row B": ["-","O","-"],
+        "row C": ["-","-","X"]
         }
     end
 
@@ -45,6 +48,14 @@ class Game < User
         @board.each do |key, value|
             p value
         end
+    end
+    
+    def reset
+        @board = {
+        "row A": ["-","-","-"],
+        "row B": ["-","-","-"],
+        "row C": ["-","-","-"]
+        }
     end
     
     def player_1_selection
