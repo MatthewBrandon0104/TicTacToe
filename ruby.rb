@@ -12,10 +12,10 @@ class User
         i = 0
         while i < 1
             p "#{self} make a selection..."
-            temp = gets.chomp.downcase
+            temp = gets.chomp.upcase
             if temp.length != 2
                 p "Error, input must be 2 characters..."
-            elsif (["a","b","c"].include? (temp[0])) == false
+            elsif (["A","B","C"].include? (temp[0])) == false
                 p "Error, please select either row a, b, or c..."
             elsif (["1","2","3"].include? (temp[1])) == false
                 p "Error, please select a column as 1, 2, or 3..."
@@ -36,8 +36,8 @@ class Game < User
         @player_2 = User.new
         @board = {
         "row A": ["-","-","-"],
-        "row B": ["X","O","O"],
-        "row C": ["X","-","O"]
+        "row B": ["-","-","-"],
+        "row C": ["-","-","-"]
         }
     end
 
@@ -45,6 +45,16 @@ class Game < User
         @board.each do |key, value|
             p value
         end
+    end
+    
+    def player_1_selection
+        temp = @player_1.selection
+        @board[:"row #{temp[0]}"][(temp[1].to_i) - 1] = @player_1.icon
+    end
+    
+    def player_2_selection
+        temp = @player_2.selection
+        @board[:"row #{temp[0]}"][(temp[1].to_i) - 1] = @player_1.icon
     end
     
     def check_win
@@ -87,7 +97,8 @@ class Game < User
     
     def play_round
         draw_board
-        check_win
+        player_1_selection
+        draw_board
     end
 end
 
