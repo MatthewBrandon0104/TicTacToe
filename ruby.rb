@@ -38,8 +38,8 @@ class Game < User
         @player_1 = User.new
         @player_2 = User.new
         @board = {
-        "row A": ["X","-","-"],
-        "row B": ["-","O","-"],
+        "row A": ["-","-","-"],
+        "row B": ["-","-","-"],
         "row C": ["-","-","X"]
         }
     end
@@ -73,11 +73,15 @@ class Game < User
             if value.all? {|item| item == "X" && item != "-"}
                 p "There's a winner!"
                 p "#{key} across and the Player X"
+                @player_1.wins += 1
+                @player_2.losses += 1
                 return
             
             elsif value.all? {|item| item == "O" && item != "-"}
                 p "There's a winner!"
                 p "#{key} across and the Player O"
+                @player_2.wins += 1
+                @player_1.losses += 1
                 return
             end
         end
@@ -92,6 +96,13 @@ class Game < User
                 
             if @board[:"row A"][i] == @board[:"row B"][i] && @board[:"row A"][i] == @board[:"row C"][i]
                 p "We have a vertical winner...player #{@board[:"row A"][i]}!"
+                if @board[:"row A"][i] == "X"
+                    @player_1.wins += 1
+                    @player_2.losses += 1
+                else
+                    @player_2.wins += 1
+                    @player_1.losses += 1
+                end
                 return
             else
                 i += 1
@@ -101,6 +112,13 @@ class Game < User
         if @board[:"row B"][1] != "-" #checks diagonal wins
             if @board[:"row A"][0] == @board[:"row B"][1] && @board[:"row C"][2] == @board[:"row B"][1]
                 p "We have a diagonal winner...player #{@board[:"row B"][1]}!"
+                if @board[:"row B"][1] == "X"
+                    @player_1.wins += 1
+                    @player_2.losses += 1
+                else
+                    @player_2.wins += 1
+                    @player_1.losses += 1
+                end
                 return
             elsif @board[:"row A"][2] == @board[:"row B"][1] && @board[:"row C"][0] == @board[:"row B"][1]
                 p "We have a diagonal winner...player #{@board[:"row B"][1]}!"
@@ -112,15 +130,23 @@ class Game < User
     end
     
     def play_round
-        draw_board
-        player_1_selection
-        check_win
-        draw_board
-        player_2_selection
-        check_win
-        draw_board
+        i = 0
+        while i < 25
+            draw_board
+            player_1_selection
+            check_win
+            draw_board
+            player_2_selection
+            check_win
+            
+            if @player_1.wins == 1
+                p "player 1 wins!"
+                break
+            end
+        end
     end
-end
+
+end #class Game end
 
 game_1 = Game.new
 game_1.play_round
