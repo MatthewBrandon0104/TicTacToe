@@ -59,12 +59,28 @@ class Game < User
     end
     
     def player_1_selection
-        temp = @player_1.selection
+        i = 0
+        while i < 1
+            temp = @player_1.selection
+            if @board[:"row #{temp[0]}"][(temp[1].to_i) - 1] != '-'
+                p "Please select empty space..."
+            else
+                break
+            end
+        end
         @board[:"row #{temp[0]}"][(temp[1].to_i) - 1] = @player_1.icon
     end
     
     def player_2_selection
-        temp = @player_2.selection
+        i = 0
+        while i < 1
+            temp = @player_2.selection
+            if @board[:"row #{temp[0]}"][(temp[1].to_i) - 1] != '-'
+                p "Please select empty space..."
+            else
+                break
+            end
+        end
         @board[:"row #{temp[0]}"][(temp[1].to_i) - 1] = @player_2.icon
     end
     
