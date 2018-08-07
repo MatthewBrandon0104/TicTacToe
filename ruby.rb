@@ -54,17 +54,17 @@ class Game < User
     
     def player_2_selection
         temp = @player_2.selection
-        @board[:"row #{temp[0]}"][(temp[1].to_i) - 1] = @player_1.icon
+        @board[:"row #{temp[0]}"][(temp[1].to_i) - 1] = @player_2.icon
     end
     
     def check_win
         @board.each do |key,value| #checks horizontal wins
-            if value.all? {|item| item == "X"}
+            if value.all? {|item| item == "X" && item != "-"}
                 p "There's a winner!"
                 p "#{key} across and the Player X"
                 return
             
-            elsif value.all? {|item| item == "O"}
+            elsif value.all? {|item| item == "O" && item != "-"}
                 p "There's a winner!"
                 p "#{key} across and the Player O"
                 return
@@ -74,6 +74,11 @@ class Game < User
 
         i = 0    #checks vertical wins
         while i < 3    
+            if @board[:"row A"][i] == "-"
+                i += 1
+                next
+            end
+                
             if @board[:"row A"][i] == @board[:"row B"][i] && @board[:"row A"][i] == @board[:"row C"][i]
                 p "We have a vertical winner...player #{@board[:"row A"][i]}!"
                 return
@@ -92,12 +97,16 @@ class Game < User
             end
         end
         
-        p "There's no winner this round..."
+        p "There's no winner yet, keep playing..."
     end
     
     def play_round
         draw_board
         player_1_selection
+        check_win
+        draw_board
+        player_2_selection
+        check_win
         draw_board
     end
 end
