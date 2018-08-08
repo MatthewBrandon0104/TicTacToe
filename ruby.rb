@@ -164,7 +164,6 @@ class Game < User
             player_1_selection
             draw_board
             check_win
-            
             if @player_1.wins == 1
                 p "player 1 wins! Play again..."
                 reset
@@ -179,7 +178,6 @@ class Game < User
             player_2_selection
             draw_board
             check_win
-            
             if @player_1.wins == 1
                 p "player 1 wins! Play again..."
                 reset
