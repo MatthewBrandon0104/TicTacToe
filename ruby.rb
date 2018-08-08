@@ -166,16 +166,3 @@ end #class Game end
 
 game_1 = Game.new
 game_1.play_round
-    
-=begin
-#How to change and iterate through each has key/array
-board.each do |k,v|
-        if k == :"row A"
-        i = 0
-        v.each do |item|
-            board[k][i] = "Z"
-            i += 1
-        end
-    end
-end
-=end
