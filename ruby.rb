@@ -51,11 +51,14 @@ class Game < User
     end
     
     def reset
+        @player_1.wins = 0
+        @player_2.wins = 0
         @board = {
-        "row A": ["-","X","O"],
-        "row B": ["O","O","X"],
-        "row C": ["X","X","O"]
+        "row A": ["-","-","-"],
+        "row B": ["-","-","-"],
+        "row C": ["-","-","-"]
         }
+        play_round
     end
     
     def stalemate_check
@@ -63,14 +66,9 @@ class Game < User
         @board.each do |k,v|
             if v.all? {|item| item == "X" || item == "O"}
                 isTrue += 1
-                p "#{isTrue}"
             end
         end
-        if isTrue == 3
-            p "stalemate"
-        else
-            p "no stalemate"
-        end
+        return true if isTrue == 3
     end
     
     def player_1_selection
@@ -156,27 +154,44 @@ class Game < User
                 return
             end
         end
-        
         p "There's no winner yet, keep playing..."
     end
     
     def play_round
+        draw_board
         i = 0
         while i < 25
-            draw_board
             player_1_selection
-            check_win
             draw_board
-            player_2_selection
             check_win
             
             if @player_1.wins == 1
-                p "player 1 wins!"
-                break
+                p "player 1 wins! Play again..."
+                reset
+            elsif @player_2.wins == 1
+                p "Player 2 wins! Play again..."
+                reset
+            elsif stalemate_check == true
+                p "stalemate, play again..."
+                reset
+            end
+            
+            player_2_selection
+            draw_board
+            check_win
+            
+            if @player_1.wins == 1
+                p "player 1 wins! Play again..."
+                reset
+            elsif @player_2.wins == 1
+                p "Player 2 wins! Play again..."
+                reset
+            elsif stalemate_check == true
+                p "stalemate, play again..."
+                reset
             end
         end
     end
-
 end #class Game end
 
 game_1 = Game.new
