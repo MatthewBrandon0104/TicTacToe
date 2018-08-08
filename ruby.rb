@@ -40,7 +40,7 @@ class Game < User
         @board = {
         "row A": ["-","-","-"],
         "row B": ["-","-","-"],
-        "row C": ["-","-","X"]
+        "row C": ["-","-","-"]
         }
     end
 
@@ -52,10 +52,25 @@ class Game < User
     
     def reset
         @board = {
-        "row A": ["-","-","-"],
-        "row B": ["-","-","-"],
-        "row C": ["-","-","-"]
+        "row A": ["-","X","O"],
+        "row B": ["O","O","X"],
+        "row C": ["X","X","O"]
         }
+    end
+    
+    def stalemate_check
+        isTrue = 0
+        @board.each do |k,v|
+            if v.all? {|item| item == "X" || item == "O"}
+                isTrue += 1
+                p "#{isTrue}"
+            end
+        end
+        if isTrue == 3
+            p "stalemate"
+        else
+            p "no stalemate"
+        end
     end
     
     def player_1_selection
